@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: nexouya-down-bot
+    runtime: python
+    buildCommand: "pip install -r requirements.txt && apt-get update && apt-get install -y ffmpeg"
+    startCommand: "gunicorn main:app"
+    envVars:
+      - key: TOKEN
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: BOT_USERNAME
+        sync: false
+      - key: RENDER_URL
+        fromService:
+          name: nexouya-down-bot
+          type: web
+          property: host
